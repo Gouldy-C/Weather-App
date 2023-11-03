@@ -21,6 +21,8 @@ const body = document.querySelector('body')
 //fun stuff
 dotenv.config();
 
+const weatherKey = process.env.WEATHER_API_KEY
+const locationKey = process.env.LOCATION_API_KEY
 
 let dataCurrent;
 let dataForecast;
@@ -90,7 +92,7 @@ async function metric() {
 }
 async function getLocation() {
   const res = await fetch(
-    `https://api.geoapify.com/v1/ipinfo?&apiKey=${process.env.LOCATION_API_KEY}`
+    `https://api.geoapify.com/v1/ipinfo?&apiKey=${locationKey}`
   );
   const data = await res.json();
   searchString = `${data.city.name}, ${data.state.name}, ${data.country.name}`;
@@ -104,17 +106,17 @@ async function getCurrentWeather() {
   }
   if (Number(searchString)) {
     resCurrent = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/weather?zip=${searchString}&appid=${weatherKey}&units=${units}`
     );
     resForecast = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?zip=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/forecast?zip=${searchString}&appid=${weatherKey}&units=${units}`
     );
   } else {
     resCurrent = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=$process.env.WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${weatherKey}&units=${units}`
     );
     resForecast = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${searchString}&appid=${weatherKey}&units=${units}`
     );
   }
   if (resCurrent.ok) {
