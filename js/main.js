@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+
 const searchField = document.querySelector(".search-field");
 const submitBtn = document.querySelector("#button-search");
 const dateHeader = document.querySelector('.date-time')
@@ -15,6 +17,9 @@ const windSpeed = document.querySelector('.wind-avg')
 const windGust = document.querySelector('.wind-gust')
 const dailyForecasts = document.querySelector('.daily-forecasts')
 const body = document.querySelector('body')
+
+
+dotenv.config();
 
 
 let dataCurrent;
@@ -47,9 +52,6 @@ const months = {
   11: "Dec",
 };
 
-
-//icon url just replace the  with icon value from data
-// https://openweathermap.org/img/wn/10d@2x.png
 
 startUp();
 
@@ -88,7 +90,7 @@ async function metric() {
 }
 async function getLocation() {
   const res = await fetch(
-    `https://api.geoapify.com/v1/ipinfo?&apiKey=${LOCATION_API_KEY}`
+    `https://api.geoapify.com/v1/ipinfo?&apiKey=${process.env.LOCATION_API_KEY}`
   );
   const data = await res.json();
   searchString = `${data.city.name}, ${data.state.name}, ${data.country.name}`;
@@ -102,17 +104,17 @@ async function getCurrentWeather() {
   }
   if (Number(searchString)) {
     resCurrent = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${searchString}&appid=${WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/weather?zip=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
     );
     resForecast = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?zip=${searchString}&appid=${WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/forecast?zip=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
     );
   } else {
     resCurrent = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=${WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${searchString}&appid=$process.env.WEATHER_API_KEY}&units=${units}`
     );
     resForecast = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${searchString}&appid=${WEATHER_API_KEY}&units=${units}`
+      `https://api.openweathermap.org/data/2.5/forecast?q=${searchString}&appid=${process.env.WEATHER_API_KEY}&units=${units}`
     );
   }
   if (resCurrent.ok) {
