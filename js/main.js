@@ -18,7 +18,7 @@ const windGust = document.querySelector('.wind-gust')
 const dailyForecasts = document.querySelector('.daily-forecasts')
 const body = document.querySelector('body')
 
-
+//fun stuff
 dotenv.config();
 
 
